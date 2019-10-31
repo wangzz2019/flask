@@ -1,0 +1,39 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Flask Sample</title>
+</head>
+   <body>
+
+      <h3>
+         <a href = "{{ url_for('show_all') }}">Peoples - Flask 
+            SQLAlchemy sample</a>
+      </h3>
+
+      <hr/>
+      {%- for message in get_flashed_messages() %}
+         {{ message }}
+      {%- endfor %}
+
+      <h3>People (<a href = "{{ url_for('new') }}">Add
+         </a>)</h3>
+
+      <table>
+         <thead>
+            <tr>
+               <th>name</th>
+            </tr>
+         </thead>
+
+         <tbody>
+            {% for people in peoples %}
+               <tr>
+                  <td>{{ people.name }}</td>
+               </tr>
+            {% endfor %}
+         </tbody>
+      </table>
+
+   </body>
+</html>
+

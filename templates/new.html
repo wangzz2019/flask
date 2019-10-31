@@ -1,0 +1,23 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Flask Sample</title>
+</head>
+   <body>
+    <h3>People Info - Flask SQLAlchemy Sample</h3>
+      <hr/>
+
+      {%- for category, message in get_flashed_messages(with_categories = true) %}
+         <div class = "alert alert-danger">
+            {{ message }}
+         </div>
+      {%- endfor %}
+
+      <form action = "{{ request.path }}" method = "post">
+         <label for = "name">name</label><br>
+         <input type = "text" name = "name" placeholder = "Name" /><br>
+         <input type = "submit" value = "提交" />
+      </form>
+
+   </body>
+</html>
