@@ -55,7 +55,13 @@ def show_all():
     # Increment a Datadog counter.
     #statsd.increment('my_webapp.page.views')
     #db=SQLAlchemy(app)
-    return render_template('show_all.html', peoples = test.query.all())
+    #return render_template('show_all.html', peoples = test.query.all())
+    with database.snapshot() as snapshot:
+        results = snapshot.execute_sql('SELECT * from testtb')
+        peoples=results
+        for people in peoples:
+            print(people)
+    return render_template('show_all.html', peoples = results)
 
 @app.route('/new', methods = ['GET', 'POST'])
 def new():
