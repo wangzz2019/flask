@@ -2,7 +2,11 @@ from flask import Flask,jsonify, render_template, request, Response, json, redir
 from flask_sqlalchemy import SQLAlchemy
 from flask.helpers import flash
 import os
+from google.cloud import spanner
 
+#GCP Cloud Spanner
+# Imports the Google Cloud Client Library.
+#from google.cloud import spanner
 
 # Initialize DogStatsD and set the host.
 #initialize(statsd_host = 'dd-agent')
@@ -12,8 +16,33 @@ app.config['SESSION_TYPE'] = 'filesystem'
 app.config['SECRET_KEY'] = os.urandom(24)
 
 #AWS RDS
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://admin:Password123!@jacktestdb.c3bw7kcbozbg.ap-northeast-1.rds.amazonaws.com/testdb'
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://admin:Password123!@jacktestdb.c3bw7kcbozbg.ap-northeast-1.rds.amazonaws.com/testdb'
 db = SQLAlchemy(app)
+
+#GCP Cloud Spanner
+# Instantiate a client.
+spanner_client = spanner.Client(project='datadog-sandbox')
+
+# Your Cloud Spanner instance ID.
+instance_id = 'jacktest'
+
+# Get a Cloud Spanner instance by ID.
+instance = spanner_client.instance(instance_id)
+
+# Your Cloud Spanner database ID.
+database_id = 'testdb'
+
+# Get a Cloud Spanner database by ID.
+database = instance.database(database_id)
+
+# Execute a simple SQL statement.
+with database.snapshot() as snapshot:
+    results = snapshot.execute_sql('SELECT * from testtb')
+
+    for row in results:
+        print(row)
+
+
 
 class test(db.Model):
     id = db.Column('id', db.Integer, primary_key = True)
