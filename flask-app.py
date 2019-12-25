@@ -1,11 +1,17 @@
 from flask import Flask,jsonify, render_template, request, Response, json, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
+from flask.helpers import flash
+import os
 
 
 # Initialize DogStatsD and set the host.
 #initialize(statsd_host = 'dd-agent')
 
 app = Flask(__name__)
+app.config['SESSION_TYPE'] = 'filesystem'
+app.config['SECRET_KEY'] = os.urandom(24)
+
+#AWS RDS
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://admin:Password123!@jacktestdb.c3bw7kcbozbg.ap-northeast-1.rds.amazonaws.com/testdb'
 db = SQLAlchemy(app)
 
@@ -28,7 +34,8 @@ def new():
        if not request.form['name']:
           flash('Please enter all the fields', 'error')
        else:
-          people = test(request.form['name'], request.form['city'],request.form['addr'], request.form['pin'])
+          #people = test(request.form['name'], request.form['city'],request.form['addr'], request.form['pin'])
+          people=test(request.form['name'])
           print(people)
           db.session.add(people)
           db.session.commit()
