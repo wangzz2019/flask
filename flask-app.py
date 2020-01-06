@@ -3,6 +3,9 @@ from flask_sqlalchemy import SQLAlchemy
 from flask.helpers import flash
 import os
 from google.cloud import spanner
+from ddtrace import tracer
+
+
 
 #GCP Cloud Spanner
 # Imports the Google Cloud Client Library.
@@ -49,6 +52,7 @@ def gsp():
     database = instance.database(database_id)
 
     # Execute a simple SQL statement.
+    span = tracer.trace('spanner.sql')
     with database.snapshot() as snapshot:
         results = snapshot.execute_sql('SELECT * from testtb')
         peoples=[]
@@ -56,6 +60,7 @@ def gsp():
             peoples.append(people(result[0],result[1]))
         # for people in results:
         #     peoples.list.addpend(people.name)
+        span.finish()
         return render_template('show_all.html',peoples = peoples)
 
 
