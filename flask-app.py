@@ -34,6 +34,7 @@ class people():
         self.name = name
 
 @app.route("/gsp",methods=['GET','POST'])
+@tracer.wrap()
 def gsp():
     #GCP Cloud Spanner
     # Instantiate a client.
@@ -52,7 +53,7 @@ def gsp():
     database = instance.database(database_id)
 
     # Execute a simple SQL statement.
-    span = tracer.trace('spanner.sql')
+    #pan = tracer.trace('spanner.sql')
     with database.snapshot() as snapshot:
         results = snapshot.execute_sql('SELECT * from testtb')
         peoples=[]
@@ -60,7 +61,7 @@ def gsp():
             peoples.append(people(result[0],result[1]))
         # for people in results:
         #     peoples.list.addpend(people.name)
-        span.finish()
+        #span.finish()
         return render_template('show_all.html',peoples = peoples)
 
 
