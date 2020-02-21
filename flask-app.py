@@ -73,6 +73,9 @@ def show_all():
     db=SQLAlchemy(app)
     return render_template('show_all.html', peoples = test.query.all())
     
+@app.route('/test')
+def test():
+    return "this is a test response"
 
 @app.route('/new', methods = ['GET', 'POST'])
 def new():
