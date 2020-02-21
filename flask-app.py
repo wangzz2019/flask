@@ -19,7 +19,7 @@ app.config['SESSION_TYPE'] = 'filesystem'
 app.config['SECRET_KEY'] = os.urandom(24)
 
 #AWS RDS
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://admin:Password123!@jacktestdb.c3bw7kcbozbg.ap-northeast-1.rds.amazonaws.com/testdb'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://XXXX:xxxxxxxx@jacktestdb.c3bw7kcbozbg.ap-northeast-1.rds.amazonaws.com/testdb'
 db = SQLAlchemy(app)
 
 class test(db.Model):
