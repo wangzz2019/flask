@@ -2,8 +2,10 @@ from flask import Flask,jsonify, render_template, request, Response, json, redir
 from flask_sqlalchemy import SQLAlchemy
 from flask.helpers import flash
 import os
-from google.cloud import spanner
-from ddtrace import tracer
+import pymysql
+pymysql.install_as_MySQLdb()
+#from google.cloud import spanner
+#from ddtrace import tracer
 
 
 
@@ -19,7 +21,7 @@ app.config['SESSION_TYPE'] = 'filesystem'
 app.config['SECRET_KEY'] = os.urandom(24)
 
 #AWS RDS
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://XXXX:xxxxxxxx@jacktestdb.c3bw7kcbozbg.ap-northeast-1.rds.amazonaws.com/testdb'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://XXXX:xxxxxx@jacktestdb.c3bw7kcbozbg.ap-northeast-1.rds.amazonaws.com/testdb'
 db = SQLAlchemy(app)
 
 class test(db.Model):
@@ -34,7 +36,7 @@ class people():
         self.name = name
 
 @app.route("/gsp",methods=['GET','POST'])
-@tracer.wrap()
+#@tracer.wrap()
 def gsp():
     #GCP Cloud Spanner
     # Instantiate a client.
@@ -74,7 +76,7 @@ def show_all():
     return render_template('show_all.html', peoples = test.query.all())
     
 @app.route('/test')
-def test():
+def testpage():
     return "this is a test response"
 
 @app.route('/new', methods = ['GET', 'POST'])
@@ -94,4 +96,5 @@ def new():
 
 
 if __name__ == "__main__":
-  app.run(host="0.0.0.0", port=5123)
+  port = int(os.getenv("PORT", 8080))
+  app.run(host="0.0.0.0",port=port)
