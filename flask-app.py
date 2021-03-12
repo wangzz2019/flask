@@ -4,7 +4,8 @@ from flask.helpers import flash
 import os
 import pymysql
 pymysql.install_as_MySQLdb()
-#from google.cloud import spanner
+from google.cloud import spanner, firestore_v1
+# from google.cloud import firestore
 #from ddtrace import tracer
 
 
@@ -21,7 +22,7 @@ app.config['SESSION_TYPE'] = 'filesystem'
 app.config['SECRET_KEY'] = os.urandom(24)
 
 #AWS RDS
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://XXXX:xxxxxx@jacktestdb.c3bw7kcbozbg.ap-northeast-1.rds.amazonaws.com/testdb'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://xxx:xxx@jacktestdb.c3bw7kcbozbg.ap-northeast-1.rds.amazonaws.com/testdb'
 db = SQLAlchemy(app)
 
 class test(db.Model):
@@ -34,6 +35,33 @@ class people():
     def __init__(self,id,name):
         self.id=id
         self.name = name
+
+@app.route("/firestore",methods=['GET','POST'])
+#@tracer.wrap()
+def firestore():
+    #GCP firestore
+    # firestore_client = firestore.Client(project='datadog-sandbox')
+    firestore_client=firestore_v1.Client()
+    doc_ref = firestore_client.collection(u'users').document(u'namelist1')
+    doc_ref.set({
+        u'first': u'Jack',
+        u'last': u'Wang',   
+        u'born': 1982
+    })
+    doc_ref = firestore_client.collection(u'users').document(u'namelist2')
+    doc_ref.set({
+        u'first': u'Zhizheng',
+        u'middle': u'Jack',
+        u'last': u'Wang',
+        u'born': 1982
+    })
+    users_ref = firestore_client.collection(u'users')
+    docs = users_ref.stream()
+
+    for doc in docs:
+        print(f'{doc.id} => {doc.to_dict()}')
+    return "call firestore ok"
+  
 
 @app.route("/gsp",methods=['GET','POST'])
 #@tracer.wrap()
@@ -77,7 +105,7 @@ def show_all():
     
 @app.route('/test')
 def testpage():
-    return "this is a test response"
+    return "this is a test response created by Mike"
 
 @app.route('/new', methods = ['GET', 'POST'])
 def new():
@@ -96,5 +124,5 @@ def new():
 
 
 if __name__ == "__main__":
-  port = int(os.getenv("PORT", 8080))
+  port = int(os.getenv("PORT", 8081))
   app.run(host="0.0.0.0",port=port)
