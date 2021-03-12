@@ -57,10 +57,14 @@ def firestore():
     })
     users_ref = firestore_client.collection(u'users')
     docs = users_ref.stream()
-
+    peoples=[]
     for doc in docs:
+        i=1
         print(f'{doc.id} => {doc.to_dict()}')
-    return "call firestore ok"
+        peoples.append(people(i,doc.to_dict()['first']))
+        i=i+1
+
+    return render_template('show_all.html',peoples = peoples)
   
 
 @app.route("/gsp",methods=['GET','POST'])

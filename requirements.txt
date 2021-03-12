@@ -1,4 +1,6 @@
 Flask
 flask_sqlalchemy
 pymysql
-
+ddtrace
+google-cloud-spanner
+google-cloud-firestore

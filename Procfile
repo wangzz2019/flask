@@ -1,1 +1,1 @@
-web: python flask-app.py
+web: ddtrace-run python flask-app.py
