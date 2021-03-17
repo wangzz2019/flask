@@ -6,7 +6,7 @@ import pymysql
 pymysql.install_as_MySQLdb()
 from google.cloud import spanner, firestore_v1
 # from google.cloud import firestore
-#from ddtrace import tracer
+from ddtrace import tracer
 
 
 
@@ -39,6 +39,7 @@ class people():
 @app.route("/firestore",methods=['GET','POST'])
 #@tracer.wrap()
 def firestore():
+    ddtrace.config.grpc["service"]="Google Firestore"
     #GCP firestore
     # firestore_client = firestore.Client(project='datadog-sandbox')
     firestore_client=firestore_v1.Client()
