@@ -6,7 +6,7 @@ import pymysql
 pymysql.install_as_MySQLdb()
 from google.cloud import spanner, firestore_v1
 # from google.cloud import firestore
-from ddtrace import tracer
+from ddtrace import tracer,config
 
 
 
@@ -39,7 +39,7 @@ class people():
 @app.route("/firestore",methods=['GET','POST'])
 #@tracer.wrap()
 def firestore():
-    ddtrace.config.grpc["service"]="Google Firestore"
+    config.grpc["service"]="Google Firestore"
     #GCP firestore
     # firestore_client = firestore.Client(project='datadog-sandbox')
     firestore_client=firestore_v1.Client()
@@ -73,6 +73,7 @@ def firestore():
 def gsp():
     #GCP Cloud Spanner
     # Instantiate a client.
+    config.grpc["service"]="Google Spanner"
     spanner_client = spanner.Client(project='datadog-sandbox')
 
     # Your Cloud Spanner instance ID.
