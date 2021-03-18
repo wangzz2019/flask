@@ -41,7 +41,14 @@ class people():
 def getSampleJson():
     retVal={
         'key1': 1,
-        'key2': "Value2"
+        'key2': "Value2",
+        'key3': [{
+            'key4':"Value4",
+            'key5':"Value5"
+        },{
+            'key6':"Value6",
+            'key7':"value7"
+        }]
     }
     return retVal
 
