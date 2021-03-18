@@ -6,7 +6,7 @@ import pymysql
 pymysql.install_as_MySQLdb()
 from google.cloud import spanner, firestore_v1
 # from google.cloud import firestore
-from ddtrace import tracer,config
+#from ddtrace import tracer,config
 
 
 
@@ -35,6 +35,16 @@ class people():
     def __init__(self,id,name):
         self.id=id
         self.name = name
+
+@app.route("/samplejson",methods=['GET','POST'])
+#@tracer.wrap()
+def getSampleJson():
+    retVal={
+        'key1': 1,
+        'key2': "Value2"
+    }
+    return retVal
+
 
 @app.route("/firestore",methods=['GET','POST'])
 #@tracer.wrap()
