@@ -22,7 +22,7 @@ app.config['SESSION_TYPE'] = 'filesystem'
 app.config['SECRET_KEY'] = os.urandom(24)
 
 #AWS RDS
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://xxx:xxx@jacktestdb.c3bw7kcbozbg.ap-northeast-1.rds.amazonaws.com/testdb'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://xxx:xxxxx!@jacktestdb.c3bw7kcbozbg.ap-northeast-1.rds.amazonaws.com/testdb'
 db = SQLAlchemy(app)
 
 class test(db.Model):
@@ -128,7 +128,9 @@ def show_all():
     
 @app.route('/test')
 def testpage():
-    return "this is a test response created by Mike"
+    resp = Response("test page response")
+    resp.headers['Access-Control-Allow-Origin'] = '*'
+    return resp
 
 @app.route('/new', methods = ['GET', 'POST'])
 def new():

@@ -16,12 +16,23 @@
         // version: '1.0.0',
         sampleRate: 100,
         trackInteractions: true,
-        allowedTracingOrigins: ["flask", /http:\/\/.18.180.59.191:8080/]
+        allowedTracingOrigins: ["flask", /http:\/\/18\.180\.59\.191:8080/]
     });
 </script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+  $("button").click(function(){
+    $.ajax({url: "http://18.180.59.191:8080/test", success: function(result){
+      $("#div1").html(result);
+    }});
+  });
+});
+</script>
 </head>
-   <body>
-
+ <body>
+<div id="div1"><h2>External call test</h2></div>
+<button>Get External Content</button>
       <h3>
          <a href = "{{ url_for('show_all') }}">Peoples - Flask 
             SQLAlchemy sample created by jack</a>
@@ -34,7 +45,7 @@
 
       <h3>People (<a href = "{{ url_for('new') }}">Add
          </a>)</h3>
-
+      
       <table>
          <thead>
             <tr>
