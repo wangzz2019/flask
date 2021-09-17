@@ -15,7 +15,8 @@
         // Specify a version number to identify the deployed version of your application in Datadog 
         // version: '1.0.0',
         sampleRate: 100,
-        trackInteractions: true
+        trackInteractions: true,
+        allowedTracingOrigins: ["flask", /http:\/\/.18.180.59.191:8080/]
     });
 </script>
 </head>
