@@ -23,7 +23,7 @@
       $(document).ready(function () {
          $("#getdata").click(function () {
             $.ajax({
-               url: "http://18.180.59.191:8081/test",
+               url: "http://18.180.59.191:8080/test",
                success: function (result) {
                   $("#div1").html(result);
                }
@@ -31,7 +31,7 @@
          });
          $('#longsql').click(function () {
                $.ajax({
-                  url: "http://l18.180.59.191:8081/longsql",
+                  url: "http://l18.180.59.191:8080/longsql",
                   success: function (result) {
                      $("#div1").html(result);
                }
