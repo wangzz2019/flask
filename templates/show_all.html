@@ -17,6 +17,12 @@
          trackInteractions: true,
          allowedTracingOrigins: ["flask", /http:\/\/18\.180\.59\.191:8080/]
       });
+      window.DD_RUM && window.DD_RUM.setUser({
+         id: '1234',
+         name: 'Jack Wang',
+         email: 'jack.wang@datadoghq.com',
+         plan: 'premium'
+      });
    </script>
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
    <script>
@@ -30,14 +36,13 @@
             });
          });
          $('#longsql').click(function () {
-               $.ajax({
-                  url: "http://18.180.59.191:8080/longsql",
-                  success: function (result) {
-                     $("#div1").html(result);
+            $.ajax({
+               url: "http://18.180.59.191:8080/longsql",
+               success: function (result) {
+                  $("#div1").html(result);
                }
-               });
-            }
-         );
+            });
+         });
       });
    </script>
 </head>
