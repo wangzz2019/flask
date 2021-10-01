@@ -21,8 +21,12 @@ app = Flask(__name__)
 app.config['SESSION_TYPE'] = 'filesystem'
 app.config['SECRET_KEY'] = os.urandom(24)
 
+dbuser=str(os.environ.get('dbuser'))
+dbpass=str(os.environ.get('dbpass'))
+print (dbuser)
+
 #AWS RDS
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://xxx:xxxxx!@jacktestdb.c3bw7kcbozbg.ap-northeast-1.rds.amazonaws.com/testdb'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://' + dbuser + ':' + dbpass + '@jacktestdb.c3bw7kcbozbg.ap-northeast-1.rds.amazonaws.com/testdb'
 db = SQLAlchemy(app)
 
 class test(db.Model):
