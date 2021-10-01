@@ -1,67 +1,82 @@
 <html>
+
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Flask Sample</title>
-<script
-    src="https://www.datadoghq-browser-agent.com/datadog-rum-v3.js"
-    type="text/javascript">
-</script>
-<script>
-    window.DD_RUM && window.DD_RUM.init({
-        applicationId: 'xxx',
-        clientToken: 'xxx',
-        site: 'datadoghq.com',
-        service:'flask',
-        // Specify a version number to identify the deployed version of your application in Datadog 
-        // version: '1.0.0',
-        sampleRate: 100,
-        trackInteractions: true,
-        allowedTracingOrigins: ["flask", /http:\/\/18\.180\.59\.191:8080/]
-    });
-</script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script>
-$(document).ready(function(){
-  $("button").click(function(){
-    $.ajax({url: "http://18.180.59.191:8080/test", success: function(result){
-      $("#div1").html(result);
-    }});
-  });
-});
-</script>
+   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+   <title>Flask Sample</title>
+   <script src="https://www.datadoghq-browser-agent.com/datadog-rum-v3.js" type="text/javascript">
+   </script>
+   <script>
+      window.DD_RUM && window.DD_RUM.init({
+         applicationId: 'xxx',
+         clientToken: 'xxx',
+         site: 'datadoghq.com',
+         service: 'flask',
+         // Specify a version number to identify the deployed version of your application in Datadog 
+         // version: '1.0.0',
+         sampleRate: 100,
+         trackInteractions: true,
+         allowedTracingOrigins: ["flask", /http:\/\/18\.180\.59\.191:8080/]
+      });
+   </script>
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+   <script>
+      $(document).ready(function () {
+         $("#getdata").click(function () {
+            $.ajax({
+               url: "http://localhost:8081/test",
+               success: function (result) {
+                  $("#div1").html(result);
+               }
+            });
+         });
+         $('#longsql').click(function () {
+               $.ajax({
+                  url: "http://localhost:8081/longsql",
+                  success: function (result) {
+                     $("#div1").html(result);
+               }
+               });
+            }
+         );
+      });
+   </script>
 </head>
- <body>
-<div id="div1"><h2>External call test</h2></div>
-<button>Get External Content</button>
-      <h3>
-         <a href = "{{ url_for('show_all') }}">Peoples - Flask 
-            SQLAlchemy sample created by jack</a>
-      </h3>
 
-      <hr/>
-      {%- for message in get_flashed_messages() %}
-         {{ message }}
-      {%- endfor %}
+<body>
+   <div id="div1">
+      <h2>External call test</h2>
+   </div>
+   <button id="getdata">Get External Content</button>
+   <button id='longsql' onclick=>Long SQL</button>
+   <h3>
+      <a href="{{ url_for('show_all') }}">Peoples - Flask
+         SQLAlchemy sample created by jack</a>
+   </h3>
 
-      <h3>People (<a href = "{{ url_for('new') }}">Add
-         </a>)</h3>
-      
-      <table>
-         <thead>
-            <tr>
-               <th>name</th>
-            </tr>
-         </thead>
+   <hr />
+   {%- for message in get_flashed_messages() %}
+   {{ message }}
+   {%- endfor %}
 
-         <tbody>
-            {% for people in peoples %}
-               <tr>
-                  <td>{{ people.name }}</td>
-               </tr>
-            {% endfor %}
-         </tbody>
-      </table>
+   <h3>People (<a href="{{ url_for('new') }}">Add
+      </a>)</h3>
 
-   </body>
+   <table>
+      <thead>
+         <tr>
+            <th>name</th>
+         </tr>
+      </thead>
+
+      <tbody>
+         {% for people in peoples %}
+         <tr>
+            <td>{{ people.name }}</td>
+         </tr>
+         {% endfor %}
+      </tbody>
+   </table>
+
+</body>
+
 </html>
-

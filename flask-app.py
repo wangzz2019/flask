@@ -137,6 +137,16 @@ def testpage():
     resp.headers['Access-Control-Allow-Origin'] = '*'
     return resp
 
+@app.route('/longsql')
+def longsql():
+    db=SQLAlchemy(app)
+    db.session.execute('select sleep(10)')
+    db.session.commit
+    all=db.session.execute('select * from test').fetchall()
+    resp=Response(all[0][1])
+    resp.headers['Access-Control-Allow-Origin'] = '*'
+    return resp
+
 @app.route('/new', methods = ['GET', 'POST'])
 def new():
     if request.method == 'POST':
