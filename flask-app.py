@@ -27,6 +27,7 @@ print (dbuser)
 
 #AWS RDS
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://' + dbuser + ':' + dbpass + '@jacktestdb.c3bw7kcbozbg.ap-northeast-1.rds.amazonaws.com/testdb'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 class test(db.Model):
