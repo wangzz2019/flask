@@ -95,7 +95,7 @@ def firestore():
 def gsp():
     #GCP Cloud Spanner
     # Instantiate a client.
-    config.grpc["service"]="Google Spanner"
+    #config.grpc["service"]="Google Spanner"
     spanner_client = spanner.Client(project='datadog-sandbox')
 
     # Your Cloud Spanner instance ID.
