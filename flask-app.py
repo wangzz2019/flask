@@ -6,8 +6,7 @@ import pymysql
 pymysql.install_as_MySQLdb()
 from google.cloud import spanner, firestore_v1
 # from google.cloud import firestore
-#from ddtrace import tracer,config
-
+from ddtrace import tracer,config
 
 
 #GCP Cloud Spanner
@@ -91,11 +90,11 @@ def firestore():
   
 
 @app.route("/gsp",methods=['GET','POST'])
-#@tracer.wrap()
+# @tracer.wrap("gsp",service="Google Spanner")
 def gsp():
     #GCP Cloud Spanner
     # Instantiate a client.
-    #config.grpc["service"]="Google Spanner"
+    config.grpc["service"]="Google Spanner"
     spanner_client = spanner.Client(project='datadog-sandbox')
 
     # Your Cloud Spanner instance ID.
@@ -113,7 +112,11 @@ def gsp():
     # Execute a simple SQL statement.
     #pan = tracer.trace('spanner.sql')
     with database.snapshot() as snapshot:
-        results = snapshot.execute_sql('SELECT * from testtb')
+        sql="SELECT * from testtb"
+        span = tracer.current_span()
+        span.set_tag("sql",sql)
+        # span.finish()
+        results = snapshot.execute_sql(sql)
         peoples=[]
         for result in results:
             peoples.append(people(result[0],result[1]))
@@ -164,5 +167,5 @@ def new():
 
 
 if __name__ == "__main__":
-  port = int(os.getenv("PORT", 8081))
+  port = int(os.getenv("PORT", 8080))
   app.run(host="0.0.0.0",port=port)

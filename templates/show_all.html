@@ -15,7 +15,7 @@
          // version: '1.0.0',
          sampleRate: 100,
          trackInteractions: true,
-         allowedTracingOrigins: ["flask", /http:\/\/18\.180\.59\.191:8080/]
+         allowedTracingOrigins: ["flask", /http:\/\/35\.74\.62\.42:8080/]
       });
       window.DD_RUM && window.DD_RUM.setUser({
          id: '1234',
@@ -29,7 +29,7 @@
       $(document).ready(function () {
          $("#getdata").click(function () {
             $.ajax({
-               url: "http://18.180.59.191:8080/test",
+               url: "http://35.74.62.42:8080/test",
                success: function (result) {
                   $("#div1").html(result);
                }
@@ -37,7 +37,7 @@
          });
          $('#longsql').click(function () {
             $.ajax({
-               url: "http://18.180.59.191:8080/longsql",
+               url: "http://35.74.62.42:8080/longsql",
                success: function (result) {
                   $("#div1").html(result);
                }
