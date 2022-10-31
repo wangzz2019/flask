@@ -136,7 +136,9 @@ def show_all():
     
 @app.route('/test')
 def testpage():
-    resp = Response("test page response")
+    headers=request.headers
+    resp=Response("Request headers:\n" + str(headers))
+    #resp = Response("test page response")
     resp.headers['Access-Control-Allow-Origin'] = '*'
     return resp
 
