@@ -131,8 +131,11 @@ def gsp():
 def show_all():
     #Increment a Datadog counter.
     #statsd.increment('my_webapp.page.views')
-    db=SQLAlchemy(app)
+    #db=SQLAlchemy(app)
     return render_template('show_all.html', peoples = test.query.all())
+@app.route('/jstime')
+def jstime():
+    return render_template("jstime.html")
     
 @app.route('/test')
 def testpage():

@@ -14,6 +14,7 @@
          // Specify a version number to identify the deployed version of your application in Datadog 
          // version: '1.0.0',
          sampleRate: 100,
+         sessionReplaySampleRate: 100,
          trackInteractions: true,
          allowedTracingOrigins: ["flask", /http:\/\/35\.74\.62\.42:8080/]
       });
@@ -53,6 +54,8 @@
    </div>
    <button id="getdata">Get External Content</button>
    <button id='longsql' onclick=>Long SQL</button>
+</br>
+   <a href="{{ url_for('jstime') }}">jstime</a>
    <h3>
       <a href="{{ url_for('show_all') }}">Peoples - Flask
          SQLAlchemy sample created by jack</a>
