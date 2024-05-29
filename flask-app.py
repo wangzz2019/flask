@@ -4,9 +4,9 @@ from flask.helpers import flash
 import os
 import pymysql
 pymysql.install_as_MySQLdb()
-from google.cloud import spanner, firestore_v1
+#from google.cloud import spanner, firestore_v1
 # from google.cloud import firestore
-from ddtrace import tracer,config
+#from ddtrace import tracer,config
 
 
 #GCP Cloud Spanner
@@ -24,8 +24,8 @@ dbuser=str(os.environ.get('dbuser'))
 dbpass=str(os.environ.get('dbpass'))
 print (dbuser)
 
-#AWS RDS
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://' + dbuser + ':' + dbpass + '@jacktestdb.c3bw7kcbozbg.ap-northeast-1.rds.amazonaws.com/testdb'
+#alibaba cloud DB in Tokyo Region
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://' + dbuser + ':' + dbpass + '@rm-0iw7mo8itr6sp1m94jo.mysql.japan.rds.aliyuncs.com/wangzzdb'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
